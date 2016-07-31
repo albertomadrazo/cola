@@ -27,25 +27,34 @@
         android:hint="Idioma"
         android:layout_height="wrap_content"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contenido"
+        />
     <Button
         android:id="@+id/leer"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Leer"/>
-    <TextView
-        android:id="@+id/contenido"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:text="Crear archivo"/>
 
     <Button
-        android:id="@+id/creaArchivo"
+        android:id="@+id/borraArchivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Crea archivo"
+        android:text="Borra Archivo"
+        android:layout_gravity="center"
+        />
+    <Button
+        android:id="@+id/listarArchivos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Listar Archivos"
+        android:layout_gravity="center"
         />
     <TextView
+        android:layout_gravity="center"
         android:id="@+id/listaArchivos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

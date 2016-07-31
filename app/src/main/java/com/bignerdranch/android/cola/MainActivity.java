@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button leer;
     Button creaArchivo;
+    Button listarArchivos;
+
     TextView contenido;
     TextView listaArchivos;
     public static Context mContext;
@@ -46,15 +48,33 @@ public class MainActivity extends AppCompatActivity {
         etIdioma = (EditText) findViewById(R.id.idioma);
 
         leer = (Button) findViewById(R.id.leer);
-        contenido = (TextView) findViewById(R.id.contenido);
         String date = new SimpleDateFormat("yyyy-mm-dd").format(new Date());
 
-        contenido.setText(date);
+        contenido = (TextView) findViewById(R.id.contenido);
 
-        creaArchivo = (Button) findViewById(R.id.creaArchivo);
+        creaArchivo = (Button) findViewById(R.id.borraArchivo);
         creaArchivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Borra todos los archivos hasta ahora
+                File dirFiles = mContext.getFilesDir();
+                for(String filename : dirFiles.list()){
+                    if(filename.contains("Sun"))
+                        borrarArchivo(filename);
+                }
+            }
+        });
+
+        listarArchivos = (Button) findViewById(R.id.listarArchivos);
+        listarArchivos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String listillaHijaDePuta = "";
+                File lista = listarArchivos();
+                for(String item : lista.list()){
+                    listillaHijaDePuta += item + "\n";
+                }
+                listaArchivos.setText(listillaHijaDePuta);
             }
         });
 
@@ -68,25 +88,18 @@ public class MainActivity extends AppCompatActivity {
                 autor = etAutor.getText().toString();
                 idioma = etIdioma.getText().toString();
                 libro = new Libro(titulo, autor, idioma);
+                String nombreArchivo = nombraArchivo();
+                creaArchivo(mContext, nombreArchivo, libro);
+                String libroJson = null;
                 try {
-                    String nombreArchivo = nombraArchivo();
-                    creaArchivo(mContext, nombreArchivo, libro);
-                    String libroJson = leeJson(mContext, nombreArchivo);
+                    libroJson = leeJson(mContext, nombreArchivo);
                     Libro elLibro = leeObjeto(mContext, libroJson);
                     contenido.setText(libroJson);
-                    String listillaHijaDePuta = "";
-                    File lista = listarArchivos();
-                    for(String item : lista.list()){
-                        listillaHijaDePuta += item + "\n";
-                    }
-                    listaArchivos.setText(listillaHijaDePuta);
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
-
     }
 
     public void creaArchivo(Context context, String nombreArchivo, Libro libro){
@@ -144,6 +157,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return lista;
+    }
+
+    public void borrarArchivo(String archivo){
+        deleteFile(archivo);
     }
 }
 
